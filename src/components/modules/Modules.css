@@ -1,0 +1,11 @@
+.modulesContainer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.module {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid pink;
+}
