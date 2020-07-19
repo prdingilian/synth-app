@@ -1,9 +1,25 @@
 import React from "react";
 import "./Rack.css";
+import VCO from "../vco/VCO.js";
+import VCF from "../vcf/VCF.js";
+import VCA from "../vca/VCA.js";
 
 function allowDrop(ev) {
   ev.preventDefault();
 }
+
+let displayComponent = (type) => {
+  switch (type) {
+    case "VCO":
+      return <VCO></VCO>;
+    case "VCF":
+      return <VCF></VCF>;
+    case "VCA":
+      return <VCA></VCA>;
+    default:
+      return "";
+  }
+};
 
 function Rack(props) {
   return (
@@ -21,9 +37,10 @@ function Rack(props) {
                 })
               }
             >
-              {slot.type}
+              {displayComponent(slot.type)}
             </div>
             <button
+              className="deleteButton"
               onClick={(e) =>
                 props.dispatch({ type: "delete-module", payload: { index: i } })
               }

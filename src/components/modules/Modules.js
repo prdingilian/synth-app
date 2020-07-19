@@ -8,13 +8,11 @@ function drag(ev) {
 function Modules(props) {
   return (
     <div className="modulesContainer">
-      {props.modules.map((module) => {
-        return (
-          <div draggable="true" onDragStart={drag} className="module">
-            {module}
-          </div>
-        );
-      })}
+      {props.modules.map((module) => (
+        <div draggable="true" onDragStart={drag} className="module">
+          {module}
+        </div>
+      ))}
     </div>
   );
 }
