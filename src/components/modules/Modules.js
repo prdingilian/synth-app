@@ -5,10 +5,10 @@ function drag(ev) {
   ev.dataTransfer.setData("module", ev.target.innerHTML);
 }
 
-function Modules(props) {
+function Modules({ modules }) {
   return (
     <div className="modulesContainer">
-      {props.modules.map((module) => (
+      {modules.map((module) => (
         <div draggable="true" onDragStart={drag} className="module">
           {module}
         </div>

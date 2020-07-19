@@ -28,28 +28,28 @@ let displayComponent = (module, index, dispatch) => {
   }
 };
 
-function Rack(props) {
+function Rack({ rack, dispatch }) {
   return (
     <div className="rackContainer">
       <div className="rack">
-        {props.rack.slots.map((slot, i) => (
+        {rack.slots.map((slot, i) => (
           <div>
             <div
               className="rackSlot"
               onDragOver={allowDrop}
               onDrop={(e) =>
-                props.dispatch({
+                dispatch({
                   type: "add-module",
                   payload: { index: i, type: e.dataTransfer.getData("module") },
                 })
               }
             >
-              {displayComponent(slot, i, props.dispatch)}
+              {displayComponent(slot, i, dispatch)}
             </div>
             <button
               className="deleteButton"
               onClick={(e) =>
-                props.dispatch({ type: "delete-module", payload: { index: i } })
+                dispatch({ type: "delete-module", payload: { index: i } })
               }
             >
               Clear Slot

@@ -19,7 +19,7 @@ function reducer(state, action) {
     case "update-module":
       newState.slots[action.payload.index][action.payload.property] =
         action.payload.value;
-      console.log(newState);
+      return newState;
     default:
       return state;
   }

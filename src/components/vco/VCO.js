@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./VCO.css";
 
-function VCO(props) {
-  // confused here, I'm managing this state in 2 places now
-  let [gain, setGain] = useState(props.gain);
-
+function VCO({ gain, shape, dispatch, index }) {
   return (
     <div className="container">
       <div className="label">VCO</div>
@@ -18,11 +15,10 @@ function VCO(props) {
           value={gain}
           max="100"
           onChange={(e) => {
-            setGain(e.currentTarget.value);
-            props.dispatch({
+            dispatch({
               type: "update-module",
               payload: {
-                index: props.index,
+                index: index,
                 property: "gain",
                 value: e.currentTarget.value,
               },
@@ -39,7 +35,18 @@ function VCO(props) {
           name="shape"
           id="shape"
           min="0"
+          value={shape}
           max="100"
+          onChange={(e) => {
+            dispatch({
+              type: "update-module",
+              payload: {
+                index: index,
+                property: "shape",
+                value: e.currentTarget.value,
+              },
+            });
+          }}
         />
         <label htmlFor="gain">Shape</label>
       </div>
