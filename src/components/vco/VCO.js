@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./VCO.css";
+import { DispatchContext } from "../../App";
+import { RackContext } from "../../App";
 
-function VCO({ gain, shape, dispatch, index }) {
+function VCO({ index }) {
+  const dispatch = useContext(DispatchContext);
+  const rack = useContext(RackContext);
   return (
     <div className="container">
       <div className="label">VCO</div>
@@ -12,7 +16,7 @@ function VCO({ gain, shape, dispatch, index }) {
           name="gain"
           id="gain"
           min="0"
-          value={gain}
+          value={rack.slots[index].gain}
           max="100"
           onChange={(e) => {
             dispatch({
@@ -35,7 +39,7 @@ function VCO({ gain, shape, dispatch, index }) {
           name="shape"
           id="shape"
           min="0"
-          value={shape}
+          value={rack.slots[index].shape}
           max="100"
           onChange={(e) => {
             dispatch({

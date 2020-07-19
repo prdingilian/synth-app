@@ -3,6 +3,9 @@ import Rack from "./components/rack/Rack";
 import Modules from "./components/modules/Modules";
 import "./App.css";
 
+export const RackContext = React.createContext();
+export const DispatchContext = React.createContext();
+
 function reducer(state, action) {
   const newState = { ...state };
   switch (action.type) {
@@ -38,10 +41,16 @@ function App() {
   const modules = ["VCO", "VCF", "VCA"];
 
   return (
-    <div className="App">
-      <Rack rack={rack} dispatch={dispatch} />
-      <Modules modules={modules} />
-    </div>
+    <>
+      <RackContext.Provider value={rack}>
+        <DispatchContext.Provider value={dispatch}>
+          <div className="App">
+            <Rack />
+            <Modules modules={modules} />
+          </div>
+        </DispatchContext.Provider>
+      </RackContext.Provider>
+    </>
   );
 }
 

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Rack.css";
-import VCO from "../vco/VCO.js";
-import VCF from "../vcf/VCF.js";
-import VCA from "../vca/VCA.js";
+import VCO from "../vco/VCO";
+import VCF from "../vcf/VCF";
+import VCA from "../vca/VCA";
+import { RackContext } from "../../App";
+import { DispatchContext } from "../../App";
 
 function allowDrop(ev) {
   ev.preventDefault();
@@ -11,14 +13,7 @@ function allowDrop(ev) {
 let displayComponent = (module, index, dispatch) => {
   switch (module.type) {
     case "VCO":
-      return (
-        <VCO
-          gain={module.gain}
-          shape={module.shape}
-          dispatch={dispatch}
-          index={index}
-        ></VCO>
-      );
+      return <VCO index={index} />;
     case "VCF":
       return <VCF></VCF>;
     case "VCA":
@@ -28,7 +23,9 @@ let displayComponent = (module, index, dispatch) => {
   }
 };
 
-function Rack({ rack, dispatch }) {
+function Rack() {
+  const rack = useContext(RackContext);
+  const dispatch = useContext(DispatchContext);
   return (
     <div className="rackContainer">
       <div className="rack">
