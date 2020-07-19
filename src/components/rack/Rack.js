@@ -8,10 +8,17 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
-let displayComponent = (type) => {
-  switch (type) {
+let displayComponent = (module, index, dispatch) => {
+  switch (module.type) {
     case "VCO":
-      return <VCO></VCO>;
+      return (
+        <VCO
+          gain={module.gain}
+          shape={module.shape}
+          dispatch={dispatch}
+          index={index}
+        ></VCO>
+      );
     case "VCF":
       return <VCF></VCF>;
     case "VCA":
@@ -37,7 +44,7 @@ function Rack(props) {
                 })
               }
             >
-              {displayComponent(slot.type)}
+              {displayComponent(slot, i, props.dispatch)}
             </div>
             <button
               className="deleteButton"

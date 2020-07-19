@@ -8,10 +8,18 @@ function reducer(state, action) {
   switch (action.type) {
     case "add-module":
       newState.slots[action.payload.index] = { type: action.payload.type };
+      if (action.payload.type === "VCO") {
+        newState.slots[action.payload.index].gain = 50;
+        newState.slots[action.payload.index].shape = 50;
+      }
       return newState;
     case "delete-module":
       newState.slots[action.payload.index] = { type: null };
       return newState;
+    case "update-module":
+      newState.slots[action.payload.index][action.payload.property] =
+        action.payload.value;
+      console.log(newState);
     default:
       return state;
   }
