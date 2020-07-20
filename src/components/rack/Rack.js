@@ -13,11 +13,11 @@ function allowDrop(ev) {
 let displayComponent = (module, index, dispatch) => {
   switch (module.type) {
     case "VCO":
-      return <VCO index={index} />;
+      return <VCO index={index} color="cornsilk" />;
     case "VCF":
-      return <VCF></VCF>;
+      return <VCF index={index} color="aliceblue" />;
     case "VCA":
-      return <VCA></VCA>;
+      return <VCA index={index} color="lavender" />;
     default:
       return "";
   }

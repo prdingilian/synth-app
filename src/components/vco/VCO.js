@@ -3,33 +3,34 @@ import "./VCO.css";
 import { DispatchContext } from "../../App";
 import { RackContext } from "../../App";
 
-function VCO({ index }) {
+function VCO({ index, color }) {
   const dispatch = useContext(DispatchContext);
   const rack = useContext(RackContext);
+
   return (
-    <div className="container">
+    <div className="container" style={{ backgroundColor: color }}>
       <div className="label">VCO</div>
-      <div className="gainKnob">
+      <div className="detuneKnob">
         <input
           className="slider"
           type="range"
-          name="gain"
-          id="gain"
+          name="detune"
+          id="detune"
           min="0"
-          value={rack.slots[index].gain}
-          max="100"
+          value={rack.slots[index].detune}
+          max="50"
           onChange={(e) => {
             dispatch({
               type: "update-module",
               payload: {
                 index: index,
-                property: "gain",
+                property: "detune",
                 value: e.currentTarget.value,
               },
             });
           }}
         />
-        <label htmlFor="gain">Gain</label>
+        <label htmlFor="gain">Detune</label>
       </div>
 
       <div className="shapeKnob">
@@ -39,8 +40,9 @@ function VCO({ index }) {
           name="shape"
           id="shape"
           min="0"
+          step="25"
           value={rack.slots[index].shape}
-          max="100"
+          max="75"
           onChange={(e) => {
             dispatch({
               type: "update-module",

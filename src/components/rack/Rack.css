@@ -9,14 +9,22 @@
   width: 80%;
   height: 40%;
   grid-template-columns: repeat(5, 1fr);
-  border: 1px solid red;
+  border: 1px solid black;
 }
 
 .rackSlot {
   height: 10rem;
-  border: 1px solid blue;
+  border: 1px solid grey;
 }
 
 .deleteButton {
   margin-top: 0.5rem;
+  background-color: white;
+  border: none;
+  transition: all 0.1s ease-in-out;
+  color: darkred;
+}
+
+.deleteButton:hover {
+  transform: scale(1.1);
 }
