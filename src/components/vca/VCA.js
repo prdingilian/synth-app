@@ -3,9 +3,9 @@ import "./VCA.css";
 import { DispatchContext } from "../../App";
 import { RackContext } from "../../App";
 
-function VCA({ index, color }) {
+function VCA({ color }) {
   const dispatch = useContext(DispatchContext);
-  const rack = useContext(RackContext);
+  const { VCA } = useContext(RackContext);
 
   return (
     <div className="container" style={{ backgroundColor: color }}>
@@ -17,13 +17,13 @@ function VCA({ index, color }) {
           name="gain"
           id="gain"
           min="0"
-          value={rack.slots[index].gain}
+          value={VCA.gain}
           max="20"
           onChange={(e) => {
             dispatch({
               type: "update-module",
               payload: {
-                index: index,
+                module: "VCA",
                 property: "gain",
                 value: e.currentTarget.value,
               },

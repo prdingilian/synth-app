@@ -1,3 +1,27 @@
 .App {
+  height: 100vh;
+  padding: 1rem;
   text-align: center;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    158deg,
+    rgba(255, 255, 255, 1) 66%,
+    rgba(226, 226, 226, 0.6895133053221288) 100%
+  );
+}
+
+.sequencers {
+  display: flex;
+}
+
+button {
+  width: 10%;
+  padding: 0.3rem;
+  margin: 1rem;
+  color: white;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  border-radius: 2px;
 }

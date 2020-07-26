@@ -1,0 +1,19 @@
+.seqContainer {
+  width: 33%;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  padding-bottom: 1rem;
+  border-right: 1px solid black;
+}
+
+.seqContainer:last-child {
+  border-right: none;
+}
+
+.step {
+  height: 2rem;
+  margin-right: 10%;
+  margin-left: 10%;
+  cursor: pointer;
+}

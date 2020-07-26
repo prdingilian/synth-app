@@ -3,9 +3,9 @@ import "./VCF.css";
 import { DispatchContext } from "../../App";
 import { RackContext } from "../../App";
 
-function VCF({ index, color }) {
+function VCF({ color }) {
   const dispatch = useContext(DispatchContext);
-  const rack = useContext(RackContext);
+  const { VCF } = useContext(RackContext);
 
   return (
     <div className="container" style={{ backgroundColor: color }}>
@@ -17,13 +17,13 @@ function VCF({ index, color }) {
           name="frequency"
           id="frequency"
           min="100"
-          value={rack.slots[index].frequency}
+          value={VCF.frequency}
           max="9000"
           onChange={(e) => {
             dispatch({
               type: "update-module",
               payload: {
-                index: index,
+                module: "VCF",
                 property: "frequency",
                 value: e.currentTarget.value,
               },
@@ -39,13 +39,13 @@ function VCF({ index, color }) {
           name="resonance"
           id="resonance"
           min="0"
-          value={rack.slots[index].resonance}
+          value={VCF.resonance}
           max="25"
           onChange={(e) => {
             dispatch({
               type: "update-module",
               payload: {
-                index: index,
+                module: "VCF",
                 property: "resonance",
                 value: e.currentTarget.value,
               },

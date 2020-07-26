@@ -1,111 +1,252 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import Rack from "./components/rack/Rack";
-import Modules from "./components/modules/Modules";
+import StepSequencer from "./components/stepSequencer/StepSequencer";
 import "./App.css";
 import {
   createAmp,
   createFilter,
   createOsc,
   removeAmp,
-  removeOsc,
   changeFilterFrequency,
   changeFilterResonance,
   changeGain,
+  changeOscFrequency,
   changeOscShape,
   changeOscDetune,
-  removeFilter,
 } from "./webAudio";
+import useInterval from "./useInterval";
 
 export const RackContext = React.createContext();
 export const DispatchContext = React.createContext();
 
+let oldState;
+
 function reducer(state, action) {
-  const newState = { ...state };
+  oldState = state;
+  let { VCO1, VCO2, VCO3, VCF, VCA } = { ...state };
   switch (action.type) {
-    case "add-module":
-      newState.slots[action.payload.index] = { type: action.payload.type };
-      switch (action.payload.type) {
-        case "VCO":
-          newState.slots[action.payload.index].detune = 0;
-          newState.slots[action.payload.index].shape = 0;
-          createOsc(action.payload.index, "sine");
-          break;
-        case "VCA":
-          newState.slots[action.payload.index].gain = 10;
-          createAmp();
-          break;
-        case "VCF":
-          newState.slots[action.payload.index].frequency = 4500;
-          newState.slots[action.payload.index].resonance = 7;
-          createFilter();
-          break;
-        default:
-          break;
-      }
-      return newState;
-    case "delete-module":
-      switch (newState.slots[action.payload.index].type) {
-        case "VCO":
-          removeOsc(action.payload.index);
-          break;
-        case "VCA":
-          removeAmp();
-          break;
-        case "VCF":
-          removeFilter();
-          break;
-        default:
-          break;
-      }
-      newState.slots[action.payload.index] = { type: null };
-      return newState;
     case "update-module":
-      newState.slots[action.payload.index][action.payload.property] =
-        action.payload.value;
-      switch (action.payload.property) {
-        case "shape":
-          changeOscShape(action.payload.index, action.payload.value);
+      switch (action.payload.module) {
+        case "VCO1":
+          VCO1 = { ...VCO1 };
+          VCO1[action.payload.property] = action.payload.value;
           break;
-        case "detune":
-          changeOscDetune(action.payload.index, action.payload.value);
+        case "VCO2":
+          VCO2 = { ...VCO2 };
+          VCO2[action.payload.property] = action.payload.value;
           break;
-        case "gain":
-          changeGain(action.payload.value);
+        case "VCO3":
+          VCO3 = { ...VCO3 };
+          VCO3[action.payload.property] = action.payload.value;
           break;
-        case "frequency":
-          changeFilterFrequency(action.payload.value);
+        case "VCF":
+          VCF = { ...VCF };
+          VCF[action.payload.property] = action.payload.value;
           break;
-        case "resonance":
-          changeFilterResonance(action.payload.value);
+        case "VCA":
+          VCA = { ...VCA };
+          VCA[action.payload.property] = action.payload.value;
           break;
         default:
           break;
       }
-      return newState;
+      return { VCO1, VCO2, VCO3, VCF, VCA };
     default:
-      return state;
+      return VCO1, VCO2, VCO3, VCF, VCA;
   }
 }
 
 function App() {
-  const [rack, dispatch] = useReducer(reducer, {
-    slots: [
-      { type: null },
-      { type: null },
-      { type: null },
-      { type: null },
-      { type: null },
-    ],
+  const [{ VCO1, VCO2, VCO3, VCF, VCA }, dispatch] = useReducer(reducer, {
+    VCO1: { detune: 0, shape: 0, active: false },
+    VCO2: { detune: 0, shape: 25, active: false },
+    VCO3: { detune: 0, shape: 75, active: false },
+    VCF: { frequency: 4500, resonance: 7, active: false },
+    VCA: { gain: 10, active: false },
   });
-  const modules = ["VCO", "VCF", "VCA"];
+
+  let [active, setActive] = useState(false);
+  let [bpm, setBpm] = useState(3000);
+
+  let [osc1Scale, setOsc1Scale] = useState([
+    261,
+    293,
+    329,
+    349,
+    392,
+    440,
+    493,
+    523,
+  ]);
+  let [osc2Scale, setOsc2Scale] = useState([
+    261,
+    293,
+    329,
+    349,
+    392,
+    440,
+    493,
+    523,
+  ]);
+  let [osc3Scale, setOsc3Scale] = useState([
+    261,
+    293,
+    329,
+    349,
+    392,
+    440,
+    493,
+    523,
+  ]);
+  let [osc1Steps, setOsc1Steps] = useState([0, 1, 2, 3, 4, 5, 6, 7]);
+  let [osc2Steps, setOsc2Steps] = useState([0, 1, 2, 3, 4, 5, 6, 7]);
+  let [osc3Steps, setOsc3Steps] = useState([0, 1, 2, 3, 4, 5, 6, 7]);
+  let [osc1ClockDivide, setOsc1ClockDivide] = useState(1);
+  let [osc2ClockDivide, setOsc2ClockDivide] = useState(2);
+  let [osc3ClockDivide, setOsc3ClockDivide] = useState(8);
+
+  const [osc1Frequency, setOsc1Frequency] = useState(444);
+  const [osc1Clock, setOsc1Clock] = useState(0);
+  const [osc2Frequency, setOsc2Frequency] = useState(888);
+  const [osc2Clock, setOsc2Clock] = useState(0);
+  const [osc3Frequency, setOsc3Frequency] = useState(666);
+  const [osc3Clock, setOsc3Clock] = useState(0);
+
+  useEffect(() => {
+    active ? createAmp() : removeAmp();
+  }, [active]);
+
+  // Handle osc 1 clock
+  useInterval(() => {
+    setOsc1Frequency(osc1Scale[osc1Steps[osc1Clock % 8]]);
+    setOsc1Clock(osc1Clock + 1);
+  }, bpm / osc1ClockDivide);
+
+  // Handle osc 2 clock
+  useInterval(() => {
+    setOsc2Frequency(osc2Scale[osc2Steps[osc2Clock % 8]]);
+    setOsc2Clock(osc2Clock + 1);
+  }, bpm / osc2ClockDivide);
+
+  // Handle osc 3 clock
+  useInterval(() => {
+    setOsc3Frequency(osc3Scale[osc3Steps[osc3Clock % 8]]);
+    setOsc3Clock(osc3Clock + 1);
+  }, bpm / osc3ClockDivide);
+
+  // Handle Osc 1 frequency side effects
+  useEffect(() => {
+    changeOscFrequency(0, osc1Frequency);
+  }, [osc1Frequency]);
+
+  // Handle Osc 2 frequency side effects
+  useEffect(() => {
+    changeOscFrequency(1, osc2Frequency);
+  }, [osc2Frequency]);
+
+  // Handle Osc 3 frequency side effects
+  useEffect(() => {
+    changeOscFrequency(2, osc3Frequency);
+  }, [osc3Frequency]);
+
+  // Handle Osc 1 side effects
+  useEffect(() => {
+    if (VCO1.active) {
+      if (oldState.VCO1.shape !== VCO1.shape) {
+        changeOscShape(0, VCO1.shape);
+      }
+      if (oldState.VCO1.detune !== VCO1.detune) {
+        changeOscDetune(0, VCO1.detune);
+      }
+    } else {
+      createOsc(0, "sine");
+      VCO1.active = true;
+    }
+  }, [VCO1]);
+
+  // Handle Osc 2 side effects
+  useEffect(() => {
+    if (VCO2.active) {
+      if (oldState.VCO2.shape !== VCO2.shape) {
+        changeOscShape(1, VCO2.shape);
+      }
+      if (oldState.VCO2.detune !== VCO2.detune) {
+        changeOscDetune(1, VCO2.detune);
+      }
+    } else {
+      createOsc(1, "triangle");
+      VCO2.active = true;
+    }
+  }, [VCO2]);
+
+  // Handle Osc 3 side effects
+  useEffect(() => {
+    if (VCO3.active) {
+      if (oldState.VCO3.shape !== VCO3.shape) {
+        changeOscShape(2, VCO3.shape);
+      }
+      if (oldState.VCO2.detune !== VCO3.detune) {
+        changeOscDetune(2, VCO3.detune);
+      }
+    } else {
+      createOsc(2, "sawtooth");
+      VCO3.active = true;
+    }
+  }, [VCO3]);
+
+  // Handle VCF side effects
+  useEffect(() => {
+    if (VCF.active) {
+      changeFilterFrequency(VCF.frequency);
+      changeFilterResonance(VCF.resonance);
+    } else {
+      createFilter();
+      VCF.active = true;
+    }
+  }, [VCF]);
+
+  // Handle VCA side effects
+  useEffect(() => {
+    if (VCA.active) {
+      changeGain(VCA.gain);
+    } else {
+      // createAmp();
+      VCA.active = true;
+    }
+  }, [VCA]);
 
   return (
     <>
-      <RackContext.Provider value={rack}>
+      <RackContext.Provider value={{ VCO1, VCO2, VCO3, VCF, VCA }}>
         <DispatchContext.Provider value={dispatch}>
           <div className="App">
+            <button
+              style={{ backgroundColor: active ? "red" : "green" }}
+              onClick={() => setActive(!active)}
+            >
+              {active ? "Mute" : "Turn on Sound"}
+            </button>
+            <div className="sequencers">
+              <StepSequencer
+                steps={osc1Steps}
+                setOsc1Steps={setOsc1Steps}
+                clock={osc1Clock}
+                color="cornsilk"
+              />
+              <StepSequencer
+                steps={osc2Steps}
+                setOsc1Steps={setOsc2Steps}
+                clock={osc2Clock}
+                color="blanchedalmond"
+              />
+              <StepSequencer
+                steps={osc3Steps}
+                setOsc1Steps={setOsc3Steps}
+                clock={osc3Clock}
+                color="burlywood"
+              />
+            </div>
             <Rack />
-            <Modules modules={modules} />
           </div>
         </DispatchContext.Provider>
       </RackContext.Provider>

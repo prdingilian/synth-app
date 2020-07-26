@@ -59,7 +59,9 @@ export let changeOscDetune = (id, value) => {
 };
 
 export let changeOscFrequency = (id, value) => {
-  oscillators[findOscIndex(id)].osc.frequency.value = value;
+  if (oscillators[findOscIndex(id)]) {
+    oscillators[findOscIndex(id)].osc.frequency.value = value;
+  }
 };
 
 export let createAmp = () => {

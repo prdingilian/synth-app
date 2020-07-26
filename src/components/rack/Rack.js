@@ -1,58 +1,26 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./Rack.css";
 import VCO from "../vco/VCO";
 import VCF from "../vcf/VCF";
 import VCA from "../vca/VCA";
-import { RackContext } from "../../App";
-import { DispatchContext } from "../../App";
-
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-
-let displayComponent = (module, index, dispatch) => {
-  switch (module.type) {
-    case "VCO":
-      return <VCO index={index} color="cornsilk" />;
-    case "VCF":
-      return <VCF index={index} color="aliceblue" />;
-    case "VCA":
-      return <VCA index={index} color="lavender" />;
-    default:
-      return "";
-  }
-};
 
 function Rack() {
-  const rack = useContext(RackContext);
-  const dispatch = useContext(DispatchContext);
   return (
     <div className="rackContainer">
-      <div className="rack">
-        {rack.slots.map((slot, i) => (
-          <div>
-            <div
-              className="rackSlot"
-              onDragOver={allowDrop}
-              onDrop={(e) =>
-                dispatch({
-                  type: "add-module",
-                  payload: { index: i, type: e.dataTransfer.getData("module") },
-                })
-              }
-            >
-              {displayComponent(slot, i, dispatch)}
-            </div>
-            <button
-              className="deleteButton"
-              onClick={(e) =>
-                dispatch({ type: "delete-module", payload: { index: i } })
-              }
-            >
-              Clear Slot
-            </button>
-          </div>
-        ))}
+      <div className="rackSlot">
+        <VCO name="VCO1" color="cornsilk" />
+      </div>
+      <div className="rackSlot">
+        <VCO name="VCO2" color="blanchedalmond" />
+      </div>
+      <div className="rackSlot">
+        <VCO name="VCO3" color="burlywood" />
+      </div>
+      <div className="rackSlot">
+        <VCF color="aliceblue" />
+      </div>
+      <div className="rackSlot">
+        <VCA color="lavender" />
       </div>
     </div>
   );
