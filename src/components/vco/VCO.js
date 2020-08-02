@@ -70,6 +70,30 @@ function VCO({ name, color }) {
         />
         <label htmlFor="gain">Shape</label>
       </div>
+
+      <div className="octaveKnob">
+        <input
+          className="slider"
+          type="range"
+          name="octave"
+          id="octave"
+          min="1"
+          step="1"
+          value={5 - thisVCO.octave}
+          max="4"
+          onChange={(e) => {
+            dispatch({
+              type: "update-module",
+              payload: {
+                module: name,
+                property: "octave",
+                value: 5 - e.currentTarget.value,
+              },
+            });
+          }}
+        />
+        <label htmlFor="octave">Octave</label>
+      </div>
     </div>
   );
 }

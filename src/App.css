@@ -1,13 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
+
 .App {
-  height: 100vh;
+  height: 95vh;
   padding: 1rem;
   text-align: center;
-  background: rgb(255, 255, 255);
-  background: linear-gradient(
-    158deg,
-    rgba(255, 255, 255, 1) 66%,
-    rgba(226, 226, 226, 0.6895133053221288) 100%
-  );
+  background-color: white;
+  font-family: "Comfortaa", cursive;
+}
+
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  width: 100%;
+  padding-bottom: 0.3rem;
+}
+
+.footer {
+  position: fixed;
+  background-color: white;
+  left: 0;
+  bottom: 0;
+  padding: 0.5rem;
+  width: 100%;
 }
 
 .sequencers {
@@ -15,7 +30,7 @@
 }
 
 button {
-  width: 10%;
+  width: 10rem;
   padding: 0.3rem;
   margin: 1rem;
   color: white;
@@ -24,4 +39,30 @@ button {
   text-decoration: none;
   transition: background 250ms ease-in-out, transform 150ms ease;
   border-radius: 2px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  height: 10px;
+  background: whitesmoke;
+  outline: none;
+  opacity: 07;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: lightgray;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: lightgray;
+  cursor: pointer;
 }

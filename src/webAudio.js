@@ -6,6 +6,13 @@ const filterNode = audioContext.createBiquadFilter();
 filterNode.frequency.value = 10000;
 filterNode.type = "lowpass";
 filterNode.Q.value = 7;
+const delayNode = audioContext.createDelay();
+delayNode.delayTime.value = 0.5;
+const delayFeedback = audioContext.createGain();
+delayFeedback.gain.value = 0.8;
+delayNode.connect(delayFeedback);
+delayFeedback.connect(delayNode);
+delayNode.connect(audioContext.destination);
 const oscillators = [];
 
 export let createOsc = (id, type) => {
@@ -13,7 +20,8 @@ export let createOsc = (id, type) => {
     let osc = audioContext.createOscillator();
     osc.connect(filterNode);
     filterNode.connect(gainNode);
-    osc.frequency.value = 444;
+    gainNode.connect(delayNode);
+    osc.frequency.value = 0;
     osc.type = type;
     osc.start();
     oscillators.push({ id: id, osc: osc });
@@ -89,5 +97,9 @@ export let changeFilterResonance = (value) => {
 };
 
 export let changeGain = (value) => (gainNode.gain.value = value / 100);
+
+export let changeDelayTime = (value) => (delayNode.delayTime.value = value);
+
+export let changeDelayFeedback = (value) => (delayFeedback.gain.value = value);
 
 let findOscIndex = (id) => oscillators.findIndex((entry) => entry.id === id);
