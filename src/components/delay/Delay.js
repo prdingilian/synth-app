@@ -9,7 +9,7 @@ function Delay({ color }) {
   return (
     <div className="container" style={{ backgroundColor: color }}>
       <div className="label">Delay</div>
-      <div className="frequencyKnob">
+      <div className="rowOneKnobFull">
         <input
           className="slider"
           type="range"
@@ -31,7 +31,7 @@ function Delay({ color }) {
         />
         <label htmlFor="feedback">Feedback</label>
       </div>
-      <div className="resonanceKnob">
+      <div className="rowTwoKnobFull">
         <input
           className="slider"
           type="range"

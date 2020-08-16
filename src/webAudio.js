@@ -1,4 +1,5 @@
 const audioContext = new AudioContext();
+audioContext.suspend();
 const gainNode = audioContext.createGain();
 gainNode.gain.value = 0;
 gainNode.connect(audioContext.destination);
@@ -73,10 +74,12 @@ export let changeOscFrequency = (id, value) => {
 };
 
 export let createAmp = () => {
-  gainNode.gain.value = 0.1;
+  audioContext.resume();
+  gainNode.gain.value = 0.05;
 };
 
 export let removeAmp = () => {
+  audioContext.suspend();
   gainNode.gain.value = 0;
 };
 

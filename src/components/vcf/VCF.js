@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import "./VCF.css";
 import { DispatchContext } from "../../App";
 import { RackContext } from "../../App";
 
@@ -10,7 +9,7 @@ function VCF({ color }) {
   return (
     <div className="container" style={{ backgroundColor: color }}>
       <div className="label">VCF</div>
-      <div className="frequencyKnob">
+      <div className="rowOneKnobFull">
         <input
           className="slider"
           type="range"
@@ -32,7 +31,7 @@ function VCF({ color }) {
         />
         <label htmlFor="frequency">Frequency</label>
       </div>
-      <div className="resonanceKnob">
+      <div className="rowTwoKnobFull">
         <input
           className="slider"
           type="range"

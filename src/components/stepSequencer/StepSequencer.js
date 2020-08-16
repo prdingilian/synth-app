@@ -1,5 +1,4 @@
 import React from "react";
-import "./StepSequencer.css";
 
 let stepArr = [0, 1, 2, 3, 4, 5, 6, 7];
 let seqArr = [0, 1, 2, 3, 4, 5, 6, 7];
@@ -25,7 +24,7 @@ function StepSequencer({
   }
 
   return (
-    <div class="allSeq">
+    <div className="allSeq">
       <div className="seqParams">
         <div>
           <input
@@ -36,9 +35,9 @@ function StepSequencer({
             min="0"
             value={clockDivide}
             max="16"
-            step="2"
+            step="4"
             onChange={(e) => {
-              setOscClockDivide(e.target.value);
+              setOscClockDivide(parseInt(e.target.value));
             }}
           />
           <label htmlFor="clockDivide">Clock</label>
@@ -54,7 +53,7 @@ function StepSequencer({
             max="1"
             step="1"
             onChange={(e) => {
-              setOscScale(e.target.value);
+              setOscScale(parseInt(e.target.value));
             }}
           />
           <label htmlFor="scale">Scale</label>

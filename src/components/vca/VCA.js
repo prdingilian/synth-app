@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import "./VCA.css";
 import { DispatchContext } from "../../App";
 import { RackContext } from "../../App";
 
@@ -10,7 +9,7 @@ function VCA({ color }) {
   return (
     <div className="container" style={{ backgroundColor: color }}>
       <div className="label">VCA</div>
-      <div className="gainKnobAmp">
+      <div className="rowOneKnobFull">
         <input
           className="slider"
           type="range"
@@ -18,7 +17,7 @@ function VCA({ color }) {
           id="gain"
           min="0"
           value={VCA.gain}
-          max="20"
+          max="10"
           onChange={(e) => {
             dispatch({
               type: "update-module",

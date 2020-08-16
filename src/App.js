@@ -16,7 +16,7 @@ import {
   changeDelayTime,
   changeDelayFeedback,
 } from "./webAudio";
-import useInterval from "./useInterval";
+import { useInterval } from "react-use";
 
 export const RackContext = React.createContext();
 export const DispatchContext = React.createContext();
@@ -26,6 +26,9 @@ let scales = [
   [261, 293, 329, 349, 392, 440, 493, 523],
   [261, 293, 311, 349, 392, 440, 466, 523],
 ];
+createOsc(0, "sine");
+createOsc(1, "triangle");
+createOsc(2, "sawtooth");
 
 function reducer(state, action) {
   oldState = state;
@@ -70,12 +73,28 @@ function App() {
   const [{ VCO1, VCO2, VCO3, VCF, Delay, VCA }, dispatch] = useReducer(
     reducer,
     {
-      VCO1: { detune: 0, shape: 0, pitch: 1, octave: 1, active: false },
-      VCO2: { detune: 0, shape: 25, pitch: 1, octave: 1, active: false },
-      VCO3: { detune: 0, shape: 75, pitch: 1, octave: 1, active: false },
-      VCF: { frequency: 4500, resonance: 7, octave: 1, active: false },
+      VCO1: {
+        detune: 0,
+        shape: 0,
+        octave: 1,
+      },
+      VCO2: {
+        detune: 0,
+        shape: 25,
+        octave: 1,
+      },
+      VCO3: {
+        detune: 0,
+        shape: 75,
+        octave: 1,
+      },
+      VCF: {
+        frequency: 4500,
+        resonance: 7,
+        octave: 1,
+      },
       Delay: { feedback: 0.8, time: 0.5 },
-      VCA: { gain: 10, active: false },
+      VCA: { gain: 5 },
     }
   );
 
@@ -105,14 +124,14 @@ function App() {
     active ? createAmp() : removeAmp();
   }, [active]);
 
-  // update master clocks
+  // Update individual osc clocks on next master clock cycle
   useInterval(() => {
     setMasterOsc2ClockDivide(osc2ClockDivide);
     setMasterOsc3ClockDivide(osc3ClockDivide);
     setMasterOsc1ClockDivide(osc1ClockDivide);
   }, bpm / 1);
 
-  // Handle osc 1 clock
+  // For each osc, update its frequency as its clock runs
   useInterval(() => {
     if (scales[osc1Scale][osc1Steps[osc1Clock % 8]] > -1) {
       setOsc1Frequency(scales[osc1Scale][osc1Steps[osc1Clock % 8]]);
@@ -122,7 +141,6 @@ function App() {
     setOsc1Clock(osc1Clock + 1);
   }, bpm / masterOsc1ClockDivide);
 
-  // Handle osc 2 clock
   useInterval(() => {
     if (scales[osc2Scale][osc2Steps[osc2Clock % 8]] > -1) {
       setOsc2Frequency(scales[osc2Scale][osc2Steps[osc2Clock % 8]]);
@@ -132,7 +150,6 @@ function App() {
     setOsc2Clock(osc2Clock + 1);
   }, bpm / masterOsc2ClockDivide);
 
-  // Handle osc 3 clock
   useInterval(() => {
     if (scales[osc3Scale][osc3Steps[osc3Clock % 8]] > -1) {
       setOsc3Frequency(scales[osc3Scale][osc3Steps[osc3Clock % 8]]);
@@ -142,91 +159,53 @@ function App() {
     setOsc3Clock(osc3Clock + 1);
   }, bpm / masterOsc3ClockDivide);
 
-  // Handle Osc 1 frequency side effects
+  // Update each oscs pitch/frequency divider
   useEffect(() => {
     changeOscFrequency(0, osc1Frequency / VCO1.octave);
   }, [osc1Frequency, VCO1.octave]);
 
-  // Handle Osc 2 frequency side effects
   useEffect(() => {
     changeOscFrequency(1, osc2Frequency / VCO2.octave);
   }, [osc2Frequency, VCO2.octave]);
 
-  // Handle Osc 3 frequency side effects
   useEffect(() => {
     changeOscFrequency(2, osc3Frequency / VCO3.octave);
   }, [osc3Frequency, VCO3.octave]);
 
-  // Handle Osc 1 side effects
+  // Update each oscs shape & detune
   useEffect(() => {
-    if (VCO1.active) {
-      if (oldState.VCO1.shape !== VCO1.shape) {
-        changeOscShape(0, VCO1.shape);
-      }
-      if (oldState.VCO1.detune !== VCO1.detune) {
-        changeOscDetune(0, VCO1.detune);
-      }
-    } else {
-      createOsc(0, "sine");
-      VCO1.active = true;
-    }
+    handleOscSideEffects("VCO1", VCO1, 0);
   }, [VCO1]);
 
-  // Handle Osc 2 side effects
   useEffect(() => {
-    if (VCO2.active) {
-      if (oldState.VCO2.shape !== VCO2.shape) {
-        changeOscShape(1, VCO2.shape);
-      }
-      if (oldState.VCO2.detune !== VCO2.detune) {
-        changeOscDetune(1, VCO2.detune);
-      }
-    } else {
-      createOsc(1, "triangle");
-      VCO2.active = true;
-    }
+    handleOscSideEffects("VCO2", VCO2, 1);
   }, [VCO2]);
 
-  // Handle Osc 3 side effects
   useEffect(() => {
-    if (VCO3.active) {
-      if (oldState.VCO3.shape !== VCO3.shape) {
-        changeOscShape(2, VCO3.shape);
-      }
-      if (oldState.VCO2.detune !== VCO3.detune) {
-        changeOscDetune(2, VCO3.detune);
-      }
-    } else {
-      createOsc(2, "sawtooth");
-      VCO3.active = true;
-    }
+    handleOscSideEffects("VCO3", VCO3, 2);
   }, [VCO3]);
 
-  // Handle VCF side effects
-  useEffect(() => {
-    if (VCF.active) {
-      changeFilterFrequency(VCF.frequency);
-      changeFilterResonance(VCF.resonance);
-    } else {
-      createFilter();
-      VCF.active = true;
+  let handleOscSideEffects = (oscName, oscRef, oscId) => {
+    if (!oldState || oldState[oscName].shape !== oscRef.shape) {
+      changeOscShape(oscId, oscRef.shape);
     }
+    if (!oldState || oldState[oscName].detune !== oscRef.detune) {
+      changeOscDetune(oscId, oscRef.detune);
+    }
+  };
+
+  useEffect(() => {
+    changeFilterFrequency(VCF.frequency);
+    changeFilterResonance(VCF.resonance);
   }, [VCF]);
 
-  // Handle Delay side effects
   useEffect(() => {
     changeDelayFeedback(Delay.feedback);
     changeDelayTime(Delay.time);
   }, [Delay]);
 
-  // Handle VCA side effects
   useEffect(() => {
-    if (VCA.active) {
-      changeGain(VCA.gain);
-    } else {
-      // createAmp();
-      VCA.active = true;
-    }
+    changeGain(VCA.gain);
   }, [VCA]);
 
   return (
@@ -234,7 +213,7 @@ function App() {
       <RackContext.Provider value={{ VCO1, VCO2, VCO3, VCF, Delay, VCA }}>
         <DispatchContext.Provider value={dispatch}>
           <div className="App">
-            <div class="header">
+            <div className="header">
               <div>
                 <input
                   className="slider sliderFull"
@@ -296,7 +275,7 @@ function App() {
               />
             </div>
             <Rack />
-            <div class="footer">
+            <div className="footer">
               <a href="https://github.com/prdingilian/synth-app">
                 View on GitHub
               </a>

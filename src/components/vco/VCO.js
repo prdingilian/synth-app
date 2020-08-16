@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import "./VCO.css";
 import { DispatchContext } from "../../App";
 import { RackContext } from "../../App";
 
@@ -24,7 +23,7 @@ function VCO({ name, color }) {
   return (
     <div className="container" style={{ backgroundColor: color }}>
       <div className="label">VCO</div>
-      <div className="detuneKnob">
+      <div className="rowOneKnobHalfOne">
         <input
           className="slider"
           type="range"
@@ -39,7 +38,7 @@ function VCO({ name, color }) {
               payload: {
                 module: name,
                 property: "detune",
-                value: e.currentTarget.value,
+                value: parseInt(e.currentTarget.value),
               },
             });
           }}
@@ -47,7 +46,7 @@ function VCO({ name, color }) {
         <label htmlFor="gain">Detune</label>
       </div>
 
-      <div className="shapeKnob">
+      <div className="rowOneKnobHalfTwo">
         <input
           className="slider"
           type="range"
@@ -63,7 +62,7 @@ function VCO({ name, color }) {
               payload: {
                 module: name,
                 property: "shape",
-                value: e.currentTarget.value,
+                value: parseInt(e.currentTarget.value),
               },
             });
           }}
@@ -71,7 +70,7 @@ function VCO({ name, color }) {
         <label htmlFor="gain">Shape</label>
       </div>
 
-      <div className="octaveKnob">
+      <div className="rowTwoKnobHalfOne">
         <input
           className="slider"
           type="range"
@@ -92,7 +91,7 @@ function VCO({ name, color }) {
             });
           }}
         />
-        <label htmlFor="octave">Octave</label>
+        <label htmlFor="octave">Pitch</label>
       </div>
     </div>
   );

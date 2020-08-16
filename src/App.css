@@ -49,6 +49,7 @@ button {
   opacity: 07;
   -webkit-transition: 0.2s;
   transition: opacity 0.2s;
+  width: 90%;
 }
 
 .slider::-webkit-slider-thumb {
@@ -65,4 +66,130 @@ button {
   height: 15px;
   background: lightgray;
   cursor: pointer;
+}
+
+.rackContainer {
+  display: flex;
+  justify-content: center;
+}
+.rack {
+  display: grid;
+  column-gap: 10px;
+  padding: 10px;
+  width: 80%;
+  height: 40%;
+  grid-template-columns: repeat(6, 1fr);
+  border: 1px solid black;
+}
+
+.rackSlot {
+  height: 10rem;
+  border: 1px solid grey;
+}
+
+.deleteButton {
+  margin-top: 0.5rem;
+  background-color: white;
+  border: none;
+  transition: all 0.1s ease-in-out;
+  color: darkred;
+}
+
+.deleteButton:hover {
+  transform: scale(1.1);
+}
+
+.seqContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  padding-bottom: 1rem;
+}
+
+.step {
+  height: 2rem;
+  margin-right: 10%;
+  margin-left: 10%;
+  cursor: pointer;
+}
+
+.allSeq {
+  width: 33%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.2fr, 0.8fr;
+  border-right: 1px solid black;
+}
+
+.allSeq:last-child {
+  border-right: none;
+}
+
+.seqParams {
+  padding-bottom: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 0.5fr);
+}
+
+.sliderFull {
+  width: 95%;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 100%;
+}
+
+.label {
+  grid-row-start: 1;
+  grid-row-end: span 1;
+  grid-column-start: 1;
+  grid-column-end: span 2;
+  font-weight: bold;
+  padding: 0.3rem;
+}
+
+.rowOneKnobFull {
+  grid-row-start: 2;
+  grid-row-end: span 1;
+  grid-column-start: 1;
+  grid-column-end: span 2;
+}
+
+.rowTwoKnobFull {
+  grid-row-start: 3;
+  grid-row-end: span 1;
+  grid-column-start: 1;
+  grid-column-end: span 2;
+}
+
+.rowOneKnobHalfOne {
+  grid-row-start: 2;
+  grid-row-end: span 1;
+  grid-column-start: 1;
+  grid-column-end: span 1;
+}
+
+.rowOneKnobHalfTwo {
+  grid-row-start: 2;
+  grid-row-end: span 1;
+  grid-column-start: 2;
+  grid-column-end: span 1;
+}
+
+.rowTwoKnobHalfOne {
+  grid-row-start: 3;
+  grid-row-end: span 1;
+  grid-column-start: 1;
+  grid-column-end: span 1;
+}
+
+.rowTwoKnobHalfTwo {
+  grid-row-start: 3;
+  grid-row-end: span 1;
+  grid-column-start: 2;
+  grid-column-end: span 1;
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import "./Rack.css";
 import VCO from "../vco/VCO";
 import VCF from "../vcf/VCF";
 import VCA from "../vca/VCA";
