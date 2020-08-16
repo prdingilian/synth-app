@@ -93,7 +93,7 @@ function App() {
         resonance: 7,
         octave: 1,
       },
-      Delay: { feedback: 0.8, time: 0.5 },
+      Delay: { feedback: 0.5, time: 0.1 },
       VCA: { gain: 5 },
     }
   );
@@ -104,14 +104,14 @@ function App() {
   let [osc1Scale, setOsc1Scale] = useState(0);
   let [osc2Scale, setOsc2Scale] = useState(0);
   let [osc3Scale, setOsc3Scale] = useState(0);
-  let [osc1Steps, setOsc1Steps] = useState([0, 0, 4, 4, 0, 0, 1, 1]);
-  let [osc2Steps, setOsc2Steps] = useState([4, 2, 1, -1, 4, 6, 1, -1]);
-  let [osc3Steps, setOsc3Steps] = useState([0, 1, 2, 3, 4, 5, 6, 7]);
-  let [osc1ClockDivide, setOsc1ClockDivide] = useState(2);
-  let [osc2ClockDivide, setOsc2ClockDivide] = useState(4);
+  let [osc1Steps, setOsc1Steps] = useState([0, -1, -1, 5, -1, -1, 1, -1]);
+  let [osc2Steps, setOsc2Steps] = useState([0, -1, 7, 5, 2, -1, -1, 4]);
+  let [osc3Steps, setOsc3Steps] = useState([0, -1, 1, 2, -1, 5, 6, -1]);
+  let [osc1ClockDivide, setOsc1ClockDivide] = useState(8);
+  let [osc2ClockDivide, setOsc2ClockDivide] = useState(8);
   let [osc3ClockDivide, setOsc3ClockDivide] = useState(8);
-  let [masterOsc1ClockDivide, setMasterOsc1ClockDivide] = useState(2);
-  let [masterOsc2ClockDivide, setMasterOsc2ClockDivide] = useState(4);
+  let [masterOsc1ClockDivide, setMasterOsc1ClockDivide] = useState(8);
+  let [masterOsc2ClockDivide, setMasterOsc2ClockDivide] = useState(8);
   let [masterOsc3ClockDivide, setMasterOsc3ClockDivide] = useState(8);
   const [osc1Frequency, setOsc1Frequency] = useState(0);
   const [osc1Clock, setOsc1Clock] = useState(0);
