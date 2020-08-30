@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/synth-app/static/css/main.6161707c.chunk.css",
-    "main.js": "/synth-app/static/js/main.a4d1784d.chunk.js",
-    "main.js.map": "/synth-app/static/js/main.a4d1784d.chunk.js.map",
+    "main.js": "/synth-app/static/js/main.68381bc9.chunk.js",
+    "main.js.map": "/synth-app/static/js/main.68381bc9.chunk.js.map",
     "runtime-main.js": "/synth-app/static/js/runtime-main.97f42354.js",
     "runtime-main.js.map": "/synth-app/static/js/runtime-main.97f42354.js.map",
     "static/js/2.9bdd5f23.chunk.js": "/synth-app/static/js/2.9bdd5f23.chunk.js",
     "static/js/2.9bdd5f23.chunk.js.map": "/synth-app/static/js/2.9bdd5f23.chunk.js.map",
     "index.html": "/synth-app/index.html",
-    "precache-manifest.224ff01efa98fd94864f452268efe118.js": "/synth-app/precache-manifest.224ff01efa98fd94864f452268efe118.js",
+    "precache-manifest.64250c127074fd60b0120cee32dd59dd.js": "/synth-app/precache-manifest.64250c127074fd60b0120cee32dd59dd.js",
     "service-worker.js": "/synth-app/service-worker.js",
     "static/css/main.6161707c.chunk.css.map": "/synth-app/static/css/main.6161707c.chunk.css.map",
     "static/js/2.9bdd5f23.chunk.js.LICENSE.txt": "/synth-app/static/js/2.9bdd5f23.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.97f42354.js",
     "static/js/2.9bdd5f23.chunk.js",
     "static/css/main.6161707c.chunk.css",
-    "static/js/main.a4d1784d.chunk.js"
+    "static/js/main.68381bc9.chunk.js"
   ]
 }
