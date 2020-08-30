@@ -4,7 +4,6 @@ import StepSequencer from "./components/stepSequencer/StepSequencer";
 import "./App.css";
 import {
   createAmp,
-  createFilter,
   createOsc,
   removeAmp,
   changeFilterFrequency,

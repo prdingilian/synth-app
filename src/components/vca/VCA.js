@@ -8,7 +8,7 @@ function VCA({ color }) {
 
   return (
     <div className="container" style={{ backgroundColor: color }}>
-      <div className="label">VCA</div>
+      <div className="label">Amp</div>
       <div className="rowOneKnobFull">
         <input
           className="slider"

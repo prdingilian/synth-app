@@ -8,7 +8,7 @@ function VCF({ color }) {
 
   return (
     <div className="container" style={{ backgroundColor: color }}>
-      <div className="label">VCF</div>
+      <div className="label">Filter</div>
       <div className="rowOneKnobFull">
         <input
           className="slider"

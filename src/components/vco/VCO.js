@@ -22,7 +22,7 @@ function VCO({ name, color }) {
 
   return (
     <div className="container" style={{ backgroundColor: color }}>
-      <div className="label">VCO</div>
+      <div className="label">Oscillator</div>
       <div className="rowOneKnobHalfOne">
         <input
           className="slider"

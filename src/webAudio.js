@@ -1,3 +1,4 @@
+const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioContext = new AudioContext();
 audioContext.suspend();
 const gainNode = audioContext.createGain();
@@ -16,7 +17,7 @@ delayFeedback.connect(delayNode);
 delayNode.connect(audioContext.destination);
 const oscillators = [];
 
-export let createOsc = (id, type) => {
+export function createOsc(id, type) {
   if (findOscIndex(id) === -1) {
     let osc = audioContext.createOscillator();
     osc.connect(filterNode);
@@ -27,17 +28,17 @@ export let createOsc = (id, type) => {
     osc.start();
     oscillators.push({ id: id, osc: osc });
   }
-};
+}
 
-export let removeOsc = (id) => {
+export function removeOsc(id) {
   let index = findOscIndex(id);
   if (index !== -1) {
     oscillators[index].osc.disconnect();
     oscillators.splice(index, 1);
   }
-};
+}
 
-export let changeOscShape = (id, value) => {
+export function changeOscShape(id, value) {
   let index = findOscIndex(id);
   if (index !== -1) {
     removeOsc(id);
@@ -58,51 +59,59 @@ export let changeOscShape = (id, value) => {
         break;
     }
   }
-};
+}
 
-export let changeOscDetune = (id, value) => {
+export function changeOscDetune(id, value) {
   let index = findOscIndex(id);
   if (index !== -1) {
     oscillators[index].osc.detune.value = value;
   }
-};
+}
 
-export let changeOscFrequency = (id, value) => {
+export function changeOscFrequency(id, value) {
   if (oscillators[findOscIndex(id)]) {
     oscillators[findOscIndex(id)].osc.frequency.value = value;
   }
-};
+}
 
-export let createAmp = () => {
+export function createAmp() {
   audioContext.resume();
   gainNode.gain.value = 0.05;
-};
+}
 
-export let removeAmp = () => {
+export function removeAmp() {
   audioContext.suspend();
   gainNode.gain.value = 0;
-};
+}
 
-export let createFilter = () => {
+export function createFilter() {
   filterNode.frequency.value = 4500;
-};
+}
 
-export let removeFilter = () => {
+export function removeFilter() {
   filterNode.frequency.value = 10000;
-};
+}
 
-export let changeFilterFrequency = (value) => {
+export function changeFilterFrequency(value) {
   filterNode.frequency.value = value;
-};
+}
 
-export let changeFilterResonance = (value) => {
+export function changeFilterResonance(value) {
   filterNode.Q.value = value;
-};
+}
 
-export let changeGain = (value) => (gainNode.gain.value = value / 100);
+export function changeGain(value) {
+  gainNode.gain.value = value / 100;
+}
 
-export let changeDelayTime = (value) => (delayNode.delayTime.value = value);
+export function changeDelayTime(value) {
+  delayNode.delayTime.value = value;
+}
 
-export let changeDelayFeedback = (value) => (delayFeedback.gain.value = value);
+export function changeDelayFeedback(value) {
+  delayFeedback.gain.value = value;
+}
 
-let findOscIndex = (id) => oscillators.findIndex((entry) => entry.id === id);
+function findOscIndex(id) {
+  return oscillators.findIndex((entry) => entry.id === id);
+}
