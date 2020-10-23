@@ -28,7 +28,7 @@ function StepSequencer({
       <div className="seqParams">
         <div>
           <input
-            className="slider sliderFull"
+            className="slider"
             type="range"
             name="clockDivide"
             id="clockDivide"
@@ -44,7 +44,7 @@ function StepSequencer({
         </div>
         <div>
           <input
-            className="slider sliderFull"
+            className="slider"
             type="range"
             name="scale"
             id="scale"

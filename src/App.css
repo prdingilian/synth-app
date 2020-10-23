@@ -1,10 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
 
 .App {
-  height: 95vh;
+  height: 97vh;
   padding: 1rem;
   text-align: center;
-  background-color: white;
+  background: #eecda3; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to left,
+    #ef629f,
+    #eecda3
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #ef629f,
+    #eecda3
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   font-family: "Comfortaa", cursive;
 }
 
@@ -18,7 +29,7 @@
 
 .footer {
   position: fixed;
-  background-color: white;
+
   left: 0;
   bottom: 0;
   padding: 0.5rem;
@@ -38,7 +49,7 @@ button {
   outline: none;
   text-decoration: none;
   transition: background 250ms ease-in-out, transform 150ms ease;
-  border-radius: 2px;
+  border-radius: 5px;
 }
 
 .slider {
@@ -50,6 +61,7 @@ button {
   -webkit-transition: 0.2s;
   transition: opacity 0.2s;
   width: 90%;
+  border-radius: 5px;
 }
 
 .slider::-webkit-slider-thumb {
@@ -59,6 +71,7 @@ button {
   height: 15px;
   background: lightgray;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .slider::-moz-range-thumb {
@@ -66,6 +79,7 @@ button {
   height: 15px;
   background: lightgray;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .rackContainer {
@@ -84,19 +98,7 @@ button {
 
 .rackSlot {
   height: 10rem;
-  border: 1px solid grey;
-}
-
-.deleteButton {
-  margin-top: 0.5rem;
-  background-color: white;
-  border: none;
-  transition: all 0.1s ease-in-out;
-  color: darkred;
-}
-
-.deleteButton:hover {
-  transform: scale(1.1);
+  margin: 0.5%;
 }
 
 .seqContainer {
@@ -109,9 +111,9 @@ button {
 
 .step {
   height: 2rem;
-  margin-right: 10%;
-  margin-left: 10%;
+  margin: 5% 10%;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .allSeq {
@@ -132,15 +134,12 @@ button {
   grid-template-columns: repeat(2, 0.5fr);
 }
 
-.sliderFull {
-  width: 95%;
-}
-
 .container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
   height: 100%;
+  border-radius: 10px;
 }
 
 .label {

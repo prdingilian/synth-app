@@ -74,8 +74,8 @@ function App() {
     {
       VCO1: {
         detune: 0,
-        shape: 0,
-        octave: 1,
+        shape: 75,
+        octave: 4,
       },
       VCO2: {
         detune: 0,
@@ -83,16 +83,15 @@ function App() {
         octave: 1,
       },
       VCO3: {
-        detune: 0,
+        detune: 6,
         shape: 75,
-        octave: 1,
+        octave: 2,
       },
       VCF: {
-        frequency: 4500,
-        resonance: 7,
-        octave: 1,
+        frequency: 2000,
+        resonance: 14,
       },
-      Delay: { feedback: 0.5, time: 0.1 },
+      Delay: { feedback: 0.3, time: 0.5 },
       VCA: { gain: 5 },
     }
   );
@@ -103,15 +102,15 @@ function App() {
   let [osc1Scale, setOsc1Scale] = useState(0);
   let [osc2Scale, setOsc2Scale] = useState(0);
   let [osc3Scale, setOsc3Scale] = useState(0);
-  let [osc1Steps, setOsc1Steps] = useState([0, -1, -1, 5, -1, -1, 1, -1]);
-  let [osc2Steps, setOsc2Steps] = useState([0, -1, 7, 5, 2, -1, -1, 4]);
-  let [osc3Steps, setOsc3Steps] = useState([0, -1, 1, 2, -1, 5, 6, -1]);
+  let [osc1Steps, setOsc1Steps] = useState([0, -1, -1, 3, -1, -1, 1, -1]);
+  let [osc2Steps, setOsc2Steps] = useState([7, 6, 2, -1, -1, 0, -1, 4]);
+  let [osc3Steps, setOsc3Steps] = useState([2, -1, -1, 1, 2,4, -1, 7]);
   let [osc1ClockDivide, setOsc1ClockDivide] = useState(8);
   let [osc2ClockDivide, setOsc2ClockDivide] = useState(8);
-  let [osc3ClockDivide, setOsc3ClockDivide] = useState(8);
+  let [osc3ClockDivide, setOsc3ClockDivide] = useState(16);
   let [masterOsc1ClockDivide, setMasterOsc1ClockDivide] = useState(8);
   let [masterOsc2ClockDivide, setMasterOsc2ClockDivide] = useState(8);
-  let [masterOsc3ClockDivide, setMasterOsc3ClockDivide] = useState(8);
+  let [masterOsc3ClockDivide, setMasterOsc3ClockDivide] = useState(16);
   const [osc1Frequency, setOsc1Frequency] = useState(0);
   const [osc1Clock, setOsc1Clock] = useState(0);
   const [osc2Frequency, setOsc2Frequency] = useState(0);
@@ -128,7 +127,7 @@ function App() {
     setMasterOsc2ClockDivide(osc2ClockDivide);
     setMasterOsc3ClockDivide(osc3ClockDivide);
     setMasterOsc1ClockDivide(osc1ClockDivide);
-  }, bpm / 1);
+  }, bpm);
 
   // For each osc, update its frequency as its clock runs
   useInterval(() => {
@@ -215,7 +214,7 @@ function App() {
             <div className="header">
               <div>
                 <input
-                  className="slider sliderFull"
+                  className="slider"
                   type="range"
                   name="bpm"
                   id="bpm"
