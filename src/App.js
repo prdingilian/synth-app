@@ -90,7 +90,7 @@ function App() {
       VCF: {
         frequency: 2000,
         resonance: 14,
-        modulator: 'none',
+        modulator: 'osc2',
       },
       Delay: { feedback: 0.3, time: 0.5 },
       VCA: { gain: 5 }
