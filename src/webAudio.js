@@ -93,7 +93,7 @@ export function removeFilter() {
 }
 
 export function changeFilterFrequency(value) {
-  filterNode.frequency.value = value;
+  filterNode.frequency.linearRampToValueAtTime(value, audioContext.currentTime + 0.2);
 }
 
 export function changeFilterResonance(value) {

@@ -90,9 +90,10 @@ function App() {
       VCF: {
         frequency: 2000,
         resonance: 14,
+        modulator: 'none',
       },
       Delay: { feedback: 0.3, time: 0.5 },
-      VCA: { gain: 5 },
+      VCA: { gain: 5 }
     }
   );
 
@@ -136,6 +137,9 @@ function App() {
     } else {
       setOsc1Frequency(0);
     }
+    if (VCF.modulator === 'osc1') {
+      handleModulator(osc1Steps[osc1Clock % 8])
+    }
     setOsc1Clock(osc1Clock + 1);
   }, bpm / masterOsc1ClockDivide);
 
@@ -145,6 +149,9 @@ function App() {
     } else {
       setOsc2Frequency(0);
     }
+    if (VCF.modulator === 'osc2') {
+      handleModulator(osc2Steps[osc2Clock % 8])
+    }
     setOsc2Clock(osc2Clock + 1);
   }, bpm / masterOsc2ClockDivide);
 
@@ -153,6 +160,9 @@ function App() {
       setOsc3Frequency(scales[osc3Scale][osc3Steps[osc3Clock % 8]]);
     } else {
       setOsc3Frequency(0);
+    }
+    if (VCF.modulator === 'osc3') {
+      handleModulator(osc3Steps[osc3Clock % 8])
     }
     setOsc3Clock(osc3Clock + 1);
   }, bpm / masterOsc3ClockDivide);
@@ -183,15 +193,6 @@ function App() {
     handleOscSideEffects("VCO3", VCO3, 2);
   }, [VCO3]);
 
-  let handleOscSideEffects = (oscName, oscRef, oscId) => {
-    if (!oldState || oldState[oscName].shape !== oscRef.shape) {
-      changeOscShape(oscId, oscRef.shape);
-    }
-    if (!oldState || oldState[oscName].detune !== oscRef.detune) {
-      changeOscDetune(oscId, oscRef.detune);
-    }
-  };
-
   useEffect(() => {
     changeFilterFrequency(VCF.frequency);
     changeFilterResonance(VCF.resonance);
@@ -205,6 +206,34 @@ function App() {
   useEffect(() => {
     changeGain(VCA.gain);
   }, [VCA]);
+
+  function handleModulator(modulatorValue) {
+    let modulatedFrequencyValue;
+    if (modulatorValue === -1) {
+      modulatedFrequencyValue = 100;
+    } else {
+      modulatorValue++;
+      modulatedFrequencyValue = (modulatorValue * 9000) / 8;
+    }
+    dispatch({
+      type: "update-module",
+      payload: {
+        module: "VCF",
+        property: "frequency",
+        value: modulatedFrequencyValue
+      }
+    });
+  }
+
+  function handleOscSideEffects(oscName, oscRef, oscId) {
+    if (!oldState || oldState[oscName].shape !== oscRef.shape) {
+      changeOscShape(oscId, oscRef.shape);
+    }
+    if (!oldState || oldState[oscName].detune !== oscRef.detune) {
+      changeOscDetune(oscId, oscRef.detune);
+    }
+  };
+  
 
   return (
     <>
@@ -273,11 +302,6 @@ function App() {
               />
             </div>
             <Rack />
-            <div className="footer">
-              <a href="https://github.com/prdingilian/synth-app">
-                View on GitHub
-              </a>
-            </div>
           </div>
         </DispatchContext.Provider>
       </RackContext.Provider>

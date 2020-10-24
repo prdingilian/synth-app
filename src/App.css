@@ -1,22 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
 
+body {
+  font-family: "Comfortaa", cursive;
+}
+
 .App {
-  height: 97vh;
   padding: 1rem;
   text-align: center;
-  background: #eecda3; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to left,
-    #ef629f,
-    #eecda3
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to left,
-    #ef629f,
-    #eecda3
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  font-family: "Comfortaa", cursive;
 }
 
 .header {
@@ -25,15 +15,6 @@
   align-items: flex-end;
   width: 100%;
   padding-bottom: 0.3rem;
-}
-
-.footer {
-  position: fixed;
-
-  left: 0;
-  bottom: 0;
-  padding: 0.5rem;
-  width: 100%;
 }
 
 .sequencers {
@@ -99,6 +80,7 @@ button {
 .rackSlot {
   height: 10rem;
   margin: 0.5%;
+  overflow: hidden;
 }
 
 .seqContainer {
@@ -191,4 +173,21 @@ button {
   grid-row-end: span 1;
   grid-column-start: 2;
   grid-column-end: span 1;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 90%;
+  border-radius: 10px;
+  color: black;
+  padding: 0.2rem;
+  cursor: pointer;
+  background: whitesmoke;
+  font-family: "Comfortaa", cursive;
+}
+
+select:focus {
+  outline: none;
 }
