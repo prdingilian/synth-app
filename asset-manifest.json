@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/synth-app/static/css/main.8fd747bb.chunk.css",
+    "main.css": "/synth-app/static/css/main.6807efc3.chunk.css",
     "main.js": "/synth-app/static/js/main.f2d593e0.chunk.js",
     "main.js.map": "/synth-app/static/js/main.f2d593e0.chunk.js.map",
     "runtime-main.js": "/synth-app/static/js/runtime-main.97f42354.js",
@@ -8,15 +8,15 @@
     "static/js/2.9bdd5f23.chunk.js": "/synth-app/static/js/2.9bdd5f23.chunk.js",
     "static/js/2.9bdd5f23.chunk.js.map": "/synth-app/static/js/2.9bdd5f23.chunk.js.map",
     "index.html": "/synth-app/index.html",
-    "precache-manifest.f69aa12ba36f29f6f95ae7fd3ee5c6ae.js": "/synth-app/precache-manifest.f69aa12ba36f29f6f95ae7fd3ee5c6ae.js",
+    "precache-manifest.d6cf1ad957a89fec733d2006486f5fc1.js": "/synth-app/precache-manifest.d6cf1ad957a89fec733d2006486f5fc1.js",
     "service-worker.js": "/synth-app/service-worker.js",
-    "static/css/main.8fd747bb.chunk.css.map": "/synth-app/static/css/main.8fd747bb.chunk.css.map",
+    "static/css/main.6807efc3.chunk.css.map": "/synth-app/static/css/main.6807efc3.chunk.css.map",
     "static/js/2.9bdd5f23.chunk.js.LICENSE.txt": "/synth-app/static/js/2.9bdd5f23.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.97f42354.js",
     "static/js/2.9bdd5f23.chunk.js",
-    "static/css/main.8fd747bb.chunk.css",
+    "static/css/main.6807efc3.chunk.css",
     "static/js/main.f2d593e0.chunk.js"
   ]
 }
