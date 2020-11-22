@@ -76,16 +76,19 @@ function App() {
         detune: 0,
         shape: 75,
         octave: 4,
+        portamento: 0
       },
       VCO2: {
         detune: 0,
         shape: 25,
         octave: 1,
+        portamento: 0
       },
       VCO3: {
         detune: 6,
         shape: 75,
         octave: 2,
+        portamento: 0
       },
       VCF: {
         frequency: 2000,
@@ -169,15 +172,15 @@ function App() {
 
   // Update each oscs pitch/frequency divider
   useEffect(() => {
-    changeOscFrequency(0, osc1Frequency / VCO1.octave);
+    changeOscFrequency(0, osc1Frequency / VCO1.octave, VCO1.portamento);
   }, [osc1Frequency, VCO1.octave]);
 
   useEffect(() => {
-    changeOscFrequency(1, osc2Frequency / VCO2.octave);
+    changeOscFrequency(1, osc2Frequency / VCO2.octave, VCO2.portamento);
   }, [osc2Frequency, VCO2.octave]);
 
   useEffect(() => {
-    changeOscFrequency(2, osc3Frequency / VCO3.octave);
+    changeOscFrequency(2, osc3Frequency / VCO3.octave, VCO3.portamento);
   }, [osc3Frequency, VCO3.octave]);
 
   // Update each oscs shape & detune
@@ -257,7 +260,7 @@ function App() {
                 />
                 <label htmlFor="scale">Bpm</label>
               </div>
-              <h1>wwwsynth</h1>
+              <h1 className="title"><span className="spanOne">Sequencer</span> <span className="spanTwo">Synthesizer</span></h1>
               <div>
                 <button
                   style={{

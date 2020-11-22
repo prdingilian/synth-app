@@ -68,9 +68,10 @@ export function changeOscDetune(id, value) {
   }
 }
 
-export function changeOscFrequency(id, value) {
+export function changeOscFrequency(id, value, portamentoTime) {
   if (oscillators[findOscIndex(id)]) {
-    oscillators[findOscIndex(id)].osc.frequency.value = value;
+    oscillators[findOscIndex(id)].osc.frequency.linearRampToValueAtTime(value, audioContext.currentTime + portamentoTime);
+    // oscillators[findOscIndex(id)].osc.frequency.value = value;
   }
 }
 

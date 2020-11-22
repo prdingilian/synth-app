@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Goldman&display=swap");
 
 body {
   font-family: "Comfortaa", cursive;
@@ -15,6 +16,18 @@ body {
   align-items: flex-end;
   width: 100%;
   padding-bottom: 0.3rem;
+}
+
+.title {
+  font-family: "Goldman", cursive;
+}
+
+.spanOne {
+  color: coral;
+}
+
+.spanTwo {
+  color: #89edb7;
 }
 
 .sequencers {
